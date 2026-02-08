@@ -3,6 +3,7 @@ import { MarketTickerSection } from "@/components/sections/home/market-ticker-se
 import { ServicesSection } from "@/components/sections/home/services-section";
 import { WhyChooseUsSection } from "@/components/sections/home/why-choose-us-section";
 import { StatisticsSection } from "@/components/sections/home/statistics-section";
+import { InsightsPreviewSection } from "@/components/sections/home/insights-preview-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -22,9 +23,11 @@ export default function HomePage(): JSX.Element {
       {/* Company Statistics */}
       <StatisticsSection />
 
+      {/* Research & Insights Preview */}
+      <InsightsPreviewSection />
+
       {/*
         Upcoming sections (planned order):
-        - Research / Insights Preview
         - Compliance & Risk Disclosure
         - Testimonials
         - Strong CTA (Account Opening)
