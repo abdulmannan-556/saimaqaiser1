@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/sections/home/hero-section";
 import { MarketTickerSection } from "@/components/sections/home/market-ticker-section";
+import { ServicesSection } from "@/components/sections/home/services-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -10,9 +11,11 @@ export default function HomePage(): JSX.Element {
       {/* Market Snapshot / Ticker */}
       <MarketTickerSection />
 
+      {/* Services Overview */}
+      <ServicesSection />
+
       {/*
         Upcoming sections (planned order):
-        - Services Overview
         - Why Choose Us
         - Company Statistics
         - Research Preview
