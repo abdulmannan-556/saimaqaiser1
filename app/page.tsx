@@ -8,11 +8,19 @@ import { ComplianceSection } from "@/components/sections/home/compliance-section
 import { TestimonialsSection } from "@/components/sections/home/testimonials-section";
 import { CtaSection } from "@/components/sections/home/cta-section";
 
+// Reuse your existing specialized components
+import { CtaAccountOpen } from "@/components/sections/home/cta-account-open";
+import { PartnerLogos } from "@/components/sections/home/partner-logos";
+import { ResearchPreview } from "@/components/sections/home/research-preview";
+
 export default function HomePage(): JSX.Element {
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
       <HeroSection />
+
+      {/* Partner Logos / Trust Section */}
+      <PartnerLogos />
 
       {/* Market Snapshot / Ticker */}
       <MarketTickerSection />
@@ -27,7 +35,7 @@ export default function HomePage(): JSX.Element {
       <StatisticsSection />
 
       {/* Research & Insights Preview */}
-      <InsightsPreviewSection />
+      <ResearchPreview />
 
       {/* Compliance & Risk Disclosure */}
       <ComplianceSection />
@@ -35,8 +43,11 @@ export default function HomePage(): JSX.Element {
       {/* Client Testimonials */}
       <TestimonialsSection />
 
-      {/* Strong CTA */}
+      {/* CTA Section */}
       <CtaSection />
+
+      {/* Open Account CTA (existing specialized component) */}
+      <CtaAccountOpen />
     </main>
   );
 }
