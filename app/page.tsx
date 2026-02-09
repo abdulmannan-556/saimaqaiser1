@@ -5,6 +5,7 @@ import { WhyChooseUsSection } from "@/components/sections/home/why-choose-us-sec
 import { StatisticsSection } from "@/components/sections/home/statistics-section";
 import { InsightsPreviewSection } from "@/components/sections/home/insights-preview-section";
 import { ComplianceSection } from "@/components/sections/home/compliance-section";
+import { TestimonialsSection } from "@/components/sections/home/testimonials-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -30,9 +31,11 @@ export default function HomePage(): JSX.Element {
       {/* Compliance & Risk Disclosure */}
       <ComplianceSection />
 
+      {/* Client Testimonials */}
+      <TestimonialsSection />
+
       {/*
-        Upcoming sections (planned order):
-        - Testimonials
+        Upcoming section (final):
         - Strong CTA (Open Trading Account)
       */}
     </main>
