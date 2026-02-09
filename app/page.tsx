@@ -6,6 +6,7 @@ import { StatisticsSection } from "@/components/sections/home/statistics-section
 import { InsightsPreviewSection } from "@/components/sections/home/insights-preview-section";
 import { ComplianceSection } from "@/components/sections/home/compliance-section";
 import { TestimonialsSection } from "@/components/sections/home/testimonials-section";
+import { CtaSection } from "@/components/sections/home/cta-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -34,10 +35,8 @@ export default function HomePage(): JSX.Element {
       {/* Client Testimonials */}
       <TestimonialsSection />
 
-      {/*
-        Upcoming section (final):
-        - Strong CTA (Open Trading Account)
-      */}
+      {/* Strong CTA */}
+      <CtaSection />
     </main>
   );
 }
