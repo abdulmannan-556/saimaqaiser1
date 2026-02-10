@@ -1,56 +1,79 @@
-export interface NavigationItem {
+export type NavItem = {
   title: string;
   href: string;
-}
-
-interface NavigationConfig {
-  main: NavigationItem[];
-  footer: NavigationItem[];
-}
-
-export const navigation: NavigationConfig = {
-  main: [
-    {
-      title: "About",
-      href: "/about",
-    },
-    {
-      title: "Services",
-      href: "/services",
-    },
-    {
-      title: "PSX",
-      href: "/psx",
-    },
-    {
-      title: "Insights",
-      href: "/insights",
-    },
-    {
-      title: "Contact",
-      href: "/contact",
-    },
-  ],
-  footer: [
-    {
-      title: "About Us",
-      href: "/about",
-    },
-    {
-      title: "Services",
-      href: "/services",
-    },
-    {
-      title: "Compliance",
-      href: "/compliance",
-    },
-    {
-      title: "Careers",
-      href: "/careers",
-    },
-    {
-      title: "Contact",
-      href: "/contact",
-    },
-  ],
+  description?: string;
+  children?: NavItem[];
 };
+
+export const mainNavigation: NavItem[] = [
+  {
+    title: "Home",
+    href: "/",
+  },
+  {
+    title: "About Us",
+    href: "/about",
+  },
+  {
+    title: "Services",
+    href: "/services",
+    children: [
+      {
+        title: "Equity Trading",
+        href: "/services/equity-trading",
+        description: "PSX-listed equities trading services",
+      },
+      {
+        title: "Online Trading",
+        href: "/services/online-trading",
+        description: "Secure web-based trading platform",
+      },
+      {
+        title: "Investment Advisory",
+        href: "/services/investment-advisory",
+        description: "Professional investment guidance",
+      },
+      {
+        title: "Research",
+        href: "/services/research",
+        description: "Market research & analysis reports",
+      },
+    ],
+  },
+  {
+    title: "PSX",
+    href: "/psx",
+  },
+  {
+    title: "Accounts",
+    href: "/accounts",
+    children: [
+      {
+        title: "Open an Account",
+        href: "/accounts/open-account",
+      },
+    ],
+  },
+  {
+    title: "Insights",
+    href: "/insights",
+  },
+  {
+    title: "Compliance",
+    href: "/compliance",
+    children: [
+      {
+        title: "KYC Policy",
+        href: "/compliance/kyc",
+      },
+      {
+        title: "Risk Disclosure",
+        href: "/compliance/risk-disclosure",
+      },
+    ],
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
+];
