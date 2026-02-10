@@ -1,31 +1,36 @@
 "use client";
 
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
+import { HoverGlow } from "@/components/animations/hover-glow";
+
 const partners = [
   { name: "PSX", logo: "/logos/psx.png" },
-  { name: "SECP", logo: "/logos/secp.png" },
-  { name: "ABC Bank", logo: "/logos/abc-bank.png" },
-  { name: "XYZ Financial", logo: "/logos/xyz-financial.png" },
+  { name: "Karachi Stock Exchange", logo: "/logos/kse.png" },
+  { name: "Bloomberg", logo: "/logos/bloomberg.png" },
+  { name: "Reuters", logo: "/logos/reuters.png" },
 ];
 
 export function PartnerLogos() {
   return (
-    <section className="bg-background py-16 sm:py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl">
-          Trusted By Our Partners
+    <section className="py-20 bg-gray-50">
+      <RevealOnScroll direction="up" distance={40}>
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Our Partners
         </h2>
+      </RevealOnScroll>
 
-        <div className="mt-10 flex flex-wrap justify-center items-center gap-8">
-          {partners.map((partner) => (
-            <div key={partner.name} className="flex items-center justify-center w-32 h-20">
+      <div className="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-10 px-4">
+        {partners.map((partner, index) => (
+          <RevealOnScroll key={index} direction="up" distance={20}>
+            <HoverGlow className="flex items-center justify-center p-4 rounded-lg bg-white shadow-md hover:shadow-xl transition-shadow duration-300">
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="h-full object-contain grayscale hover:grayscale-0 transition"
+                className="h-12 sm:h-16 object-contain"
               />
-            </div>
-          ))}
-        </div>
+            </HoverGlow>
+          </RevealOnScroll>
+        ))}
       </div>
     </section>
   );
