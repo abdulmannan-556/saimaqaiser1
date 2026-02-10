@@ -1,70 +1,103 @@
 import Link from "next/link";
-import { navigation } from "@/lib/navigation";
+
 import { siteConfig } from "@/lib/site-config";
+import { DISCLAIMER_TEXT } from "@/lib/constants";
+import { mainNavigation } from "@/lib/navigation";
 
-export function Footer(): JSX.Element {
+export function Footer() {
   return (
-    <footer className="border-t bg-muted/40">
-      <div className="container grid gap-8 py-12 md:grid-cols-4">
-        {/* Company Info */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold">
-            {siteConfig.name}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Licensed Pakistan Stock Exchange broker providing secure,
-            transparent, and professional trading services.
-          </p>
-        </div>
+    <footer className="border-t bg-muted">
+      <div className="container py-12">
+        {/* Top Grid */}
+        <div className="grid gap-8 md:grid-cols-4">
+          {/* Company Info */}
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">
+              {siteConfig.shortName}
+            </h3>
+            <p className="mt-3 text-sm text-muted-foreground">
+              {siteConfig.description}
+            </p>
+          </div>
 
-        {/* Navigation */}
-        <div>
-          <h4 className="mb-3 text-sm font-semibold">Company</h4>
-          <ul className="space-y-2">
-            {navigation.footer.map((item) => (
-              <li key={item.title}>
-                <Link
-                  href={item.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          {/* Navigation */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground">
+              Company
+            </h4>
+            <ul className="mt-4 space-y-2">
+              {mainNavigation.map((item) => (
+                <li key={item.title}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground">
+              Contact
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+              <li>{siteConfig.address.registeredOffice}</li>
+              <li>
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="hover:text-foreground"
                 >
-                  {item.title}
-                </Link>
+                  {siteConfig.contact.email}
+                </a>
               </li>
-            ))}
-          </ul>
+              <li>
+                <a
+                  href={`tel:${siteConfig.contact.phone}`}
+                  className="hover:text-foreground"
+                >
+                  {siteConfig.contact.phone}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Regulatory */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground">
+              Regulatory
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+              <li>{siteConfig.regulatory.psx}</li>
+              <li>{siteConfig.regulatory.secp}</li>
+            </ul>
+          </div>
         </div>
 
-        {/* Compliance */}
-        <div>
-          <h4 className="mb-3 text-sm font-semibold">Compliance</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>SECP Regulated</li>
-            <li>PSX Member</li>
-            <li>Risk Disclosure</li>
-            <li>KYC / AML Policy</li>
-          </ul>
+        {/* Divider */}
+        <div className="my-8 h-px bg-border" />
+
+        {/* Disclaimers */}
+        <div className="space-y-2 text-xs text-muted-foreground">
+          <p>{DISCLAIMER_TEXT.INVESTMENT}</p>
+          <p>{DISCLAIMER_TEXT.ADVISORY}</p>
         </div>
 
-        {/* Contact */}
-        <div>
-          <h4 className="mb-3 text-sm font-semibold">Contact</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>{siteConfig.contact.phone}</li>
-            <li>{siteConfig.contact.email}</li>
-            <li>{siteConfig.contact.address}</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t">
-        <div className="container flex flex-col items-center justify-between gap-4 py-6 text-sm md:flex-row">
-          <p className="text-muted-foreground">
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-          </p>
-
-          <p className="text-muted-foreground">
-            Market investments are subject to risk.
-          </p>
+        {/* Bottom */}
+        <div className="mt-6 flex flex-col gap-2 text-xs text-muted-foreground md:flex-row md:justify-between">
+          <span>
+            © {new Date().getFullYear()} {siteConfig.name}. All rights
+            reserved.
+          </span>
+          <div className="flex gap-4">
+            <Link href="/compliance/kyc">KYC Policy</Link>
+            <Link href="/compliance/risk-disclosure">
+              Risk Disclosure
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
