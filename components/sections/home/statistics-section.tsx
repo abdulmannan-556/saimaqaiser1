@@ -1,28 +1,35 @@
 "use client";
 
-import { statisticCardData } from "@/components/corporate/statistic-card";
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
+import { NumberCounter } from "@/components/animations/number-counter";
 import { StatisticCard } from "@/components/corporate/statistic-card";
+
+const statistics = [
+  { label: "Clients", value: 500, icon: "👥" },
+  { label: "Trades", value: 1200, icon: "💹" },
+  { label: "Awards", value: 50, icon: "🏆" },
+  { label: "Research Reports", value: 200, icon: "📊" },
+];
 
 export function StatisticsSection() {
   return (
-    <section className="bg-muted py-16 sm:py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl">
+    <section className="py-20 bg-white">
+      <RevealOnScroll direction="up" distance={40}>
+        <h2 className="text-3xl font-bold text-center mb-12">
           Our Achievements
         </h2>
-        <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-          Trusted by thousands of investors across Pakistan, delivering secure and compliant trading services.
-        </p>
+      </RevealOnScroll>
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {statisticCardData.map((stat) => (
+      <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4">
+        {statistics.map((stat, index) => (
+          <RevealOnScroll key={index} direction="up" distance={20}>
             <StatisticCard
-              key={stat.label}
+              icon={stat.icon}
               label={stat.label}
-              value={stat.value}
+              value={<NumberCounter start={0} end={stat.value} duration={2000} />}
             />
-          ))}
-        </div>
+          </RevealOnScroll>
+        ))}
       </div>
     </section>
   );
