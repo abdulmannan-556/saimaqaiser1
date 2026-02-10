@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -----------------------------
-   CSS VARIABLES (FINANCIAL THEME)
--------------------------------- */
+/* ================================
+   CSS Variables (Shadcn Standard)
+   ================================ */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -16,11 +16,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    /* Corporate Blue */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
+    /* Corporate Primary (Navy / Financial Blue) */
+    --primary: 222 47% 23%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 215 20% 95%;
+    --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96%;
@@ -30,11 +30,11 @@
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
+    --ring: 222.2 47.4% 11.2%;
 
     --radius: 0.5rem;
   }
@@ -49,7 +49,7 @@
     --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -66,29 +66,49 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
-/* -----------------------------
-   BASE ELEMENT STYLES
--------------------------------- */
+/* ================================
+   Base Styles
+   ================================ */
 @layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* -----------------------------
-   UTILITIES
--------------------------------- */
+/* ================================
+   Corporate Utilities
+   ================================ */
 @layer utilities {
   .container {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .heading-primary {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
+  }
+
+  .heading-secondary {
+    @apply text-2xl font-semibold tracking-tight sm:text-3xl;
+  }
+
+  .text-muted {
+    @apply text-muted-foreground;
   }
 }
