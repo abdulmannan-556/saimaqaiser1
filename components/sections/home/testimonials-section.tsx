@@ -1,27 +1,27 @@
 interface TestimonialItem {
   name: string;
   role: string;
-  message: string;
+  feedback: string;
 }
 
 const TESTIMONIALS: TestimonialItem[] = [
   {
     name: "Ahmed R.",
-    role: "Individual Investor",
-    message:
-      "SAIMA QAISER SECURITIES has provided me with reliable execution and professional guidance. Their research helped me navigate volatile market conditions with confidence.",
+    role: "Retail Investor",
+    feedback:
+      "SAIMA QAISER SECURITIES provides a professional trading experience with reliable execution and helpful support whenever needed.",
   },
   {
-    name: "Fatima K.",
+    name: "Sara K.",
     role: "Long-term Investor",
-    message:
-      "Their transparent operations and responsive support team make them stand out among brokerage firms. I feel secure trading through their platform.",
+    feedback:
+      "Their research insights and disciplined approach helped me make more informed investment decisions in volatile markets.",
   },
   {
     name: "Usman A.",
-    role: "Active Trader",
-    message:
-      "Fast trade execution, clear communication, and strong market insights. A trustworthy brokerage firm that understands the needs of serious traders.",
+    role: "Corporate Client",
+    feedback:
+      "We value their transparency, compliance standards, and professional handling of our corporate trading requirements.",
   },
 ];
 
@@ -35,8 +35,8 @@ export function TestimonialsSection(): JSX.Element {
             What Our Clients Say
           </h2>
           <p className="mt-4 text-muted-foreground">
-            We value long-term relationships built on trust,
-            transparency, and consistent performance.
+            We build long-term relationships by focusing on trust,
+            transparency, and consistent service quality.
           </p>
         </div>
 
@@ -47,12 +47,14 @@ export function TestimonialsSection(): JSX.Element {
               key={testimonial.name}
               className="rounded-xl border bg-card p-6 transition hover:shadow-md"
             >
-              <p className="text-sm text-muted-foreground">
-                “{testimonial.message}”
+              <p className="text-sm text-muted-foreground italic">
+                “{testimonial.feedback}”
               </p>
 
               <div className="mt-6">
-                <p className="font-semibold">{testimonial.name}</p>
+                <p className="font-semibold">
+                  {testimonial.name}
+                </p>
                 <p className="text-xs text-muted-foreground">
                   {testimonial.role}
                 </p>
