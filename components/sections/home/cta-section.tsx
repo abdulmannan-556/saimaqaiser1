@@ -1,27 +1,26 @@
 "use client";
 
-import Link from "next/link";
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
 import { Button } from "@/components/ui/button";
 
 export function CtaSection() {
   return (
-    <section className="bg-primary/5 py-16 sm:py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold text-primary sm:text-4xl">
-          Ready to Start Trading?
-        </h2>
-        <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-          Open an account with SAIMA QAISER SECURITIES today and access Pakistan Stock Exchange with confidence.
-        </p>
-
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button asChild size="lg">
-            <Link href="/accounts/open-account">Open Account</Link>
+    <section className="bg-primary text-white py-20 sm:py-28">
+      <div className="container mx-auto text-center px-4">
+        <RevealOnScroll direction="up" distance={30}>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Ready to Grow Your Investments?
+          </h2>
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8">
+            Open an account with SAIMA QAISER SECURITIES (PVT) LIMITED and start trading with confidence. Our team of experts ensures your investments are secure and compliant.
+          </p>
+          <Button
+            size="lg"
+            className="bg-white text-primary hover:bg-gray-100"
+          >
+            Open Your Account
           </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/contact">Contact Us</Link>
-          </Button>
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   );
