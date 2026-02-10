@@ -1,51 +1,41 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 
-interface SeoOptions {
+type SeoProps = {
   title?: string;
   description?: string;
-  path?: string;
-}
+  keywords?: string[];
+  noIndex?: boolean;
+};
 
-/**
- * Generates consistent metadata for all pages.
- * Designed for Next.js 13 App Router.
- */
-export function generateMetadata({
+export function createMetadata({
   title,
   description,
-  path = "",
-}: SeoOptions): Metadata {
-  const fullTitle = title
+  keywords,
+  noIndex = false,
+}: SeoProps): Metadata {
+  const metaTitle = title
     ? `${title} | ${siteConfig.shortName}`
-    : siteConfig.name;
+    : siteConfig.seo.defaultTitle;
 
-  const fullDescription = description ?? siteConfig.description;
-
-  const url = `${siteConfig.url}${path}`;
+  const metaDescription =
+    description ?? siteConfig.seo.defaultDescription;
 
   return {
-    title: fullTitle,
-    description: fullDescription,
-    metadataBase: new URL(siteConfig.url),
-    alternates: {
-      canonical: url,
+    title: metaTitle,
+    description: metaDescription,
+    keywords,
+    robots: {
+      index: !noIndex,
+      follow: !noIndex,
     },
     openGraph: {
-      title: fullTitle,
-      description: fullDescription,
-      url,
-      siteName: siteConfig.name,
+      title: metaTitle,
+      description: metaDescription,
+      url: siteConfig.url,
+      siteName: siteConfig.shortName,
+      locale: "en_PK",
       type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: fullTitle,
-      description: fullDescription,
-    },
-    robots: {
-      index: true,
-      follow: true,
     },
   };
 }
