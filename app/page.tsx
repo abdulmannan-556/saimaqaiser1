@@ -1,43 +1,53 @@
-import { HeroSection } from "@/components/sections/home/hero-section";
-import { MarketTickerSection } from "@/components/sections/home/market-ticker-section";
-import { ServicesSection } from "@/components/sections/home/services-section";
-import { WhyChooseUsSection } from "@/components/sections/home/why-choose-us-section";
-import { StatisticsSection } from "@/components/sections/home/statistics-section";
-import { InsightsPreviewSection } from "@/components/sections/home/insights-preview-section";
-import { ComplianceSection } from "@/components/sections/home/compliance-section";
-import { TestimonialsSection } from "@/components/sections/home/testimonials-section";
+import { createMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site-config";
 
-export default function HomePage(): JSX.Element {
+import { ScrollProgress } from "@/components/layout/scroll-progress";
+import { MainNavbar } from "@/components/layout/main-navbar";
+import { Footer } from "@/components/layout/footer";
+
+import {
+  HeroSection,
+  ServicesOverview,
+  StatisticsSection,
+  WhyChooseUsSection,
+  MarketTickerSection,
+  TestimonialsSection,
+  InsightsPreviewSection,
+  CtaSection,
+  CtaAccountOpen,
+  PartnerLogos,
+  ResearchPreview,
+  ComplianceBadges,
+} from "@/components/sections/home";
+
+export const metadata = createMetadata({
+  title: "Home",
+  description: siteConfig.description,
+});
+
+export default function HomePage() {
   return (
-    <main className="flex flex-col">
-      {/* Hero Section */}
-      <HeroSection />
+    <>
+      <ScrollProgress />
+      <MainNavbar />
 
-      {/* Market Snapshot / Ticker */}
-      <MarketTickerSection />
+      <main className="relative">
+        <HeroSection />
+        <MarketTickerSection />
+        <ServicesOverview />
+        <ServicesOverview /> {/* optional duplicate if needed */}
+        <StatisticsSection />
+        <WhyChooseUsSection />
+        <TestimonialsSection />
+        <InsightsPreviewSection />
+        <ResearchPreview />
+        <PartnerLogos />
+        <ComplianceBadges />
+        <CtaSection />
+        <CtaAccountOpen />
+      </main>
 
-      {/* Services Overview */}
-      <ServicesSection />
-
-      {/* Why Choose Us */}
-      <WhyChooseUsSection />
-
-      {/* Company Statistics */}
-      <StatisticsSection />
-
-      {/* Research & Insights Preview */}
-      <InsightsPreviewSection />
-
-      {/* Compliance & Risk Disclosure */}
-      <ComplianceSection />
-
-      {/* Client Testimonials */}
-      <TestimonialsSection />
-
-      {/*
-        Upcoming (final) section:
-        - Strong CTA (Open Trading Account)
-      */}
-    </main>
+      <Footer />
+    </>
   );
 }
