@@ -1,17 +1,29 @@
-"use client";
+import { ComplianceCard } from "./compliance-card";
 
-type ComplianceCardProps = {
-  title: string;
-  description: string;
-  icon: string;
-};
+const complianceList = [
+  {
+    title: "PSX Licensed",
+    description: "Authorized by Pakistan Stock Exchange for brokerage services.",
+    icon: "/logos/psx.png",
+  },
+  {
+    title: "SECP Regulated",
+    description: "Registered with the Securities and Exchange Commission of Pakistan.",
+    icon: "/logos/secp.png",
+  },
+];
 
-export function ComplianceCard({ title, description, icon }: ComplianceCardProps) {
+export function ComplianceSection() {
   return (
-    <div className="flex flex-col items-center text-center rounded-lg border p-6 bg-card text-card-foreground transition hover:shadow-lg hover:scale-105">
-      <img src={icon} alt={title} className="h-12 w-12 mb-4" />
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+    <div className="grid sm:grid-cols-2 gap-6">
+      {complianceList.map((item) => (
+        <ComplianceCard
+          key={item.title}
+          title={item.title}
+          description={item.description}
+          icon={item.icon}
+        />
+      ))}
     </div>
   );
 }
