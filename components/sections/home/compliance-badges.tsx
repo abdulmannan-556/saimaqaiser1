@@ -1,36 +1,36 @@
 "use client";
 
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
+import { HoverGlow } from "@/components/animations/hover-glow";
+
 const badges = [
-  { name: "PSX Licensed", logo: "/logos/psx.png" },
-  { name: "SECP Regulated", logo: "/logos/secp.png" },
-  { name: "ISO Certified", logo: "/logos/iso.png" },
+  { title: "Licensed PSX Broker", logo: "/badges/psx.png" },
+  { title: "SECP Compliant", logo: "/badges/secp.png" },
+  { title: "Secure Trading", logo: "/badges/secure.png" },
 ];
 
 export function ComplianceBadges() {
   return (
-    <section className="bg-background py-12 sm:py-16">
-      <div className="container mx-auto text-center">
-        <h3 className="text-2xl font-bold sm:text-3xl">
-          Our Regulatory Credentials
-        </h3>
-        <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-          We are fully licensed and regulated by the relevant authorities in Pakistan.
-        </p>
+    <section className="py-16 sm:py-20 bg-gray-50">
+      <RevealOnScroll direction="up" distance={30}>
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Compliance & Security
+        </h2>
+      </RevealOnScroll>
 
-        <div className="mt-8 flex flex-wrap justify-center items-center gap-8">
-          {badges.map((badge) => (
-            <div
-              key={badge.name}
-              className="flex items-center justify-center w-32 h-20"
-            >
+      <div className="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-10 px-4">
+        {badges.map((badge, index) => (
+          <RevealOnScroll key={index} direction="up" distance={20}>
+            <HoverGlow className="flex flex-col items-center p-4 rounded-lg bg-white shadow-md hover:shadow-xl transition-shadow duration-300">
               <img
                 src={badge.logo}
-                alt={badge.name}
-                className="h-full object-contain grayscale hover:grayscale-0 transition"
+                alt={badge.title}
+                className="h-16 sm:h-20 object-contain mb-2"
               />
-            </div>
-          ))}
-        </div>
+              <span className="text-sm font-medium text-center">{badge.title}</span>
+            </HoverGlow>
+          </RevealOnScroll>
+        ))}
       </div>
     </section>
   );
