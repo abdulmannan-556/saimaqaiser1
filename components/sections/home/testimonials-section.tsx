@@ -1,30 +1,55 @@
 "use client";
 
-import { testimonialCardData, TestimonialCard } from "@/components/corporate/testimonial-card";
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
+import { HoverGlow } from "@/components/animations/hover-glow";
+import { TestimonialCard } from "@/components/corporate/testimonial-card";
+
+const testimonials = [
+  {
+    name: "Ahmed Khan",
+    position: "Investor",
+    feedback:
+      "SAIMA QAISER SECURITIES has transformed my trading experience. Professional and reliable.",
+    avatar: "/avatars/ahmed.jpg",
+  },
+  {
+    name: "Sara Ali",
+    position: "Trader",
+    feedback:
+      "The online trading platform is seamless and the market insights are extremely helpful.",
+    avatar: "/avatars/sara.jpg",
+  },
+  {
+    name: "Usman Shah",
+    position: "Investor",
+    feedback:
+      "Excellent support team and compliance standards. Highly recommend their services.",
+    avatar: "/avatars/usman.jpg",
+  },
+];
 
 export function TestimonialsSection() {
   return (
-    <section className="bg-muted py-16 sm:py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl">
-          What Our Clients Say
+    <section className="py-20 bg-white">
+      <RevealOnScroll direction="up" distance={40}>
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Testimonials
         </h2>
-        <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-          Hear from our valued clients who trust us for secure and professional trading services.
-        </p>
+      </RevealOnScroll>
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonialCardData.map((testimonial) => (
-            <TestimonialCard
-              key={testimonial.name}
-              name={testimonial.name}
-              position={testimonial.position}
-              company={testimonial.company}
-              message={testimonial.message}
-              avatar={testimonial.avatar}
-            />
-          ))}
-        </div>
+      <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+        {testimonials.map((testimonial, index) => (
+          <RevealOnScroll key={index} direction="up" distance={30}>
+            <HoverGlow className="rounded-lg p-6 shadow-lg bg-gray-50 hover:shadow-xl transition-shadow duration-300">
+              <TestimonialCard
+                name={testimonial.name}
+                position={testimonial.position}
+                feedback={testimonial.feedback}
+                avatar={testimonial.avatar}
+              />
+            </HoverGlow>
+          </RevealOnScroll>
+        ))}
       </div>
     </section>
   );
