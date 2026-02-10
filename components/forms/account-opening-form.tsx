@@ -3,33 +3,61 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+type AccountFormState = {
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  accountType: string;
+};
+
 export function AccountOpeningForm() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<AccountFormState>({
     fullName: "",
     email: "",
     phone: "",
     address: "",
     accountType: "",
-    notes: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<null | { success: boolean; message: string }>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Account opening form submitted:", form);
-    // Add API call to create new account
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const res = await fetch("/api/account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus({ success: true, message: data.message });
+        setForm({ fullName: "", email: "", phone: "", address: "", accountType: "" });
+      } else {
+        setStatus({ success: false, message: data.error });
+      }
+    } catch (error) {
+      setStatus({ success: false, message: "Something went wrong. Please try again." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4 p-4 sm:p-0">
       <Input
         name="fullName"
         value={form.fullName}
@@ -42,7 +70,7 @@ export function AccountOpeningForm() {
         name="email"
         value={form.email}
         onChange={handleChange}
-        placeholder="Email"
+        placeholder="Email Address"
         required
       />
       <Input
@@ -60,24 +88,27 @@ export function AccountOpeningForm() {
         rows={3}
         required
       />
-      <Select
+      <Input
         name="accountType"
         value={form.accountType}
         onChange={handleChange}
+        placeholder="Account Type (e.g., Individual, Corporate)"
         required
-      >
-        <option value="">Select Account Type</option>
-        <option value="individual">Individual</option>
-        <option value="corporate">Corporate</option>
-      </Select>
-      <Textarea
-        name="notes"
-        value={form.notes}
-        onChange={handleChange}
-        placeholder="Additional Notes (optional)"
-        rows={3}
       />
-      <Button type="submit" size="lg">Open Account</Button>
+
+      <Button type="submit" size="lg" disabled={loading}>
+        {loading ? "Submitting..." : "Open Account"}
+      </Button>
+
+      {status && (
+        <p
+          className={`mt-2 text-sm ${
+            status.success ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {status.message}
+        </p>
+      )}
     </form>
   );
 }
