@@ -5,21 +5,61 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+type ContactFormState = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
 
+export function ContactForm() {
+  // Form state
+  const [form, setForm] = useState<ContactFormState>({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  // Loading and status
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<null | { success: boolean; message: string }>(null);
+
+  // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    // Here you can add API call to send form data
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus({ success: true, message: data.message });
+        setForm({ name: "", email: "", subject: "", message: "" }); // Reset form
+      } else {
+        setStatus({ success: false, message: data.error });
+      }
+    } catch (error) {
+      setStatus({ success: false, message: "Something went wrong. Please try again." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4 p-4 sm:p-0">
       <Input
         name="name"
         value={form.name}
@@ -46,11 +86,24 @@ export function ContactForm() {
         name="message"
         value={form.message}
         onChange={handleChange}
-        placeholder="Message"
+        placeholder="Your Message"
         rows={5}
         required
       />
-      <Button type="submit" size="lg">Send Message</Button>
+
+      <Button type="submit" size="lg" disabled={loading}>
+        {loading ? "Sending..." : "Send Message"}
+      </Button>
+
+      {status && (
+        <p
+          className={`mt-2 text-sm ${
+            status.success ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {status.message}
+        </p>
+      )}
     </form>
   );
 }
