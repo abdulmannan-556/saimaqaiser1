@@ -3,39 +3,63 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-export function KycForm() {
-  const [form, setForm] = useState({
+type KYCFormState = {
+  fullName: string;
+  cnic: string;
+  email: string;
+  phone: string;
+  address: string;
+  incomeRange: string;
+};
+
+export function KYCForm() {
+  const [form, setForm] = useState<KYCFormState>({
     fullName: "",
     cnic: "",
     email: "",
     phone: "",
     address: "",
     incomeRange: "",
-    document: null as File | null,
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value, files } = e.target as HTMLInputElement;
-    if (files) {
-      setForm({ ...form, [name]: files[0] });
-    } else {
-      setForm({ ...form, [name]: value });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<null | { success: boolean; message: string }>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const res = await fetch("/api/kyc", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus({ success: true, message: data.message });
+        setForm({ fullName: "", cnic: "", email: "", phone: "", address: "", incomeRange: "" });
+      } else {
+        setStatus({ success: false, message: data.error });
+      }
+    } catch (error) {
+      setStatus({ success: false, message: "Something went wrong. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("KYC form submitted:", form);
-    // API call to submit KYC details
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex flex-col gap-4 p-4 sm:p-0">
       <Input
         name="fullName"
         value={form.fullName}
@@ -47,7 +71,7 @@ export function KycForm() {
         name="cnic"
         value={form.cnic}
         onChange={handleChange}
-        placeholder="CNIC / ID Number"
+        placeholder="CNIC (e.g., 12345-1234567-1)"
         required
       />
       <Input
@@ -55,7 +79,7 @@ export function KycForm() {
         name="email"
         value={form.email}
         onChange={handleChange}
-        placeholder="Email"
+        placeholder="Email Address"
         required
       />
       <Input
@@ -73,25 +97,27 @@ export function KycForm() {
         rows={3}
         required
       />
-      <Select
+      <Input
         name="incomeRange"
         value={form.incomeRange}
         onChange={handleChange}
-        required
-      >
-        <option value="">Select Income Range</option>
-        <option value="0-50k">0 - 50,000 PKR</option>
-        <option value="50k-200k">50,000 - 200,000 PKR</option>
-        <option value="200k+">200,000+ PKR</option>
-      </Select>
-      <Input
-        type="file"
-        name="document"
-        onChange={handleChange}
-        accept=".pdf,.jpg,.png"
+        placeholder="Income Range"
         required
       />
-      <Button type="submit" size="lg">Submit KYC</Button>
+
+      <Button type="submit" size="lg" disabled={loading}>
+        {loading ? "Submitting..." : "Submit KYC"}
+      </Button>
+
+      {status && (
+        <p
+          className={`mt-2 text-sm ${
+            status.success ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {status.message}
+        </p>
+      )}
     </form>
   );
 }
