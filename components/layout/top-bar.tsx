@@ -1,39 +1,47 @@
 "use client";
 
-import { siteConfig } from "@/lib/site-config";
-import { TRADING_HOURS } from "@/lib/constants";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export function TopBar() {
-  return (
-    <div className="hidden w-full border-b bg-muted text-sm text-muted-foreground md:block">
-      <div className="container flex h-10 items-center justify-between">
-        {/* Left: Market Info */}
-        <div className="flex items-center gap-4">
-          <span className="font-medium text-foreground">
-            PSX Trading Hours:
-          </span>
-          <span>{TRADING_HOURS.REGULAR}</span>
-          <span className="hidden lg:inline">
-            ({TRADING_HOURS.DAYS})
-          </span>
-        </div>
+  const [scrolled, setScrolled] = useState(false);
+  const [currentTime, setCurrentTime] = useState<string>("");
 
-        {/* Right: Contact Info */}
-        <div className="flex items-center gap-6">
-          <a
-            href={`mailto:${siteConfig.contact.email}`}
-            className="hover:text-foreground transition-colors"
-          >
-            {siteConfig.contact.email}
-          </a>
-          <a
-            href={`tel:${siteConfig.contact.phone}`}
-            className="hover:text-foreground transition-colors"
-          >
-            {siteConfig.contact.phone}
-          </a>
-        </div>
-      </div>
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Live clock (Pakistan Standard Time)
+  useEffect(() => {
+    const updateClock = () => {
+      const options: Intl.DateTimeFormatOptions = {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Karachi",
+      };
+      setCurrentTime(new Date().toLocaleTimeString("en-PK", options));
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div
+      className={cn(
+        "w-full transition-all duration-300 text-sm px-4 py-1 bg-primary text-white flex justify-center items-center gap-8",
+        scrolled && "shadow-md"
+      )}
+    >
+      <span>Market Hours: 09:30 AM - 03:30 PM PKT</span>
+      <span>Current Time: {currentTime}</span>
+      <span>Call Us: +92 21 0000000</span>
+      <span>Email: info@saimaqaisersecurities.com</span>
     </div>
   );
 }
